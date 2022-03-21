@@ -3,21 +3,24 @@
 
 int main()
 {
-  // 请在此输入您的代码
-  int num,eee[1001]={0},t,i;  //别忘了初始化数组为0
+  int num,a[1001]={0},t,i;
   int count = 0;
   scanf("%d",&num);
-  for(i=0;i<num;i++){
+  for(i=0;i<num;i++)
+  {
     scanf("%d",&t);
-    if(eee[t]==0){  //巧妙之处
-      eee[t] = t;
+    if(a[t]==0)
+    { 
+      a[t] = t;
       count++;
     }
   }
   printf("%d\n",count);
-  for(i=0;i<1001;i++){
-    if(eee[i]!=0){
-      printf("%d ",eee[i]);
+  for(i=0;i<1001;i++)
+  {
+    if(a[i]!=0)
+    {
+      printf("%d ",a[i]);
     }
   }
   return 0;
