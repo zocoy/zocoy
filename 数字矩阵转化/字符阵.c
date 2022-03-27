@@ -4,7 +4,7 @@
 #define LINE 30
 int main()
 {
-    char c[RANGE][LINE+1];/*更改后的数组*/
+    char c[RANGE][LINE+1];//更改后的数组
     int a[RANGE][LINE+1];//文件中数组
     FILE *f;
     FILE *fp;
@@ -23,7 +23,7 @@ int main()
         {
             while(fscanf(f,"%d",&a[i][j]) != 1)
             {
-                fscanf(f,"%*c");
+                fscanf(f,"%c");
             }
         }
     for(i = 0; i < RANGE; i++)
@@ -32,7 +32,6 @@ int main()
         {
             c[i][j] = *(b+a[i][j]);
             c[i][LINE] = '\0';
-            
         }
         fprintf(fp , "%s\n", c[i]);
     }
