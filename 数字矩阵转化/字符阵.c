@@ -23,7 +23,7 @@ int main()
         {
             while(fscanf(f,"%d",&a[i][j]) != 1)
             {
-                fscanf(f,"%c");
+                fscanf(f,"%c",&a[i][j]);
             }
         }
     for(i = 0; i < RANGE; i++)
