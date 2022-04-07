@@ -8,7 +8,7 @@ int main()
 	a[i] = i;
 	while((scanf("%d,%d", &p, &q)))
 	{
-		if(a[p] == a[q])	continue;
+		if(a[p] == a[q])	continue;//关键步骤
 		for(i = 0; i < N; i++)
 		{
 			t = a[p];
