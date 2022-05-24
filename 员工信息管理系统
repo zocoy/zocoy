@@ -1,0 +1,196 @@
+#include<stdio.h>
+#include<math.h>
+#include<stdlib.h>
+#include<string.h>
+#include<conio.h>
+FILE * file; 
+typedef struct __attribute__((packed)) workers
+{
+    char name[15];//姓名
+    char gender[5];//性别
+    unsigned int age;//年龄
+    unsigned long tel;//电话
+    unsigned long wage;//工资
+    unsigned long num;//职工号
+    struct workers *next;
+}Node;
+void input(Node *p)
+{
+    file = fopen("信息.xls","a");
+    fprintf(file,"姓名\t性别\t年龄\t电话\t工资\t职工号\n");
+    printf("请输入姓名：\n");
+    scanf("%s",p->name);
+    getchar();
+    printf("请输入性别：\n");
+    scanf("%s",&p->gender);
+    printf("请输入年龄：\n");
+    scanf("%d",&p->age);
+    printf("请输入电话：\n");
+    scanf("%ld",&p->tel);
+    printf("请输入工资：\n");
+    scanf("%ld",&p->wage);
+    printf("请输入职工号：\n");
+    scanf("%ld",&p->num);
+    fprintf(file,"%s\t%s\t%d\t%s\t%ld\t%d\n",p->name,p->gender,p->age,p->tel,p->wage,p->num);
+    fclose(file);
+    p->next=NULL;
+}
+Node *create()
+{
+    int i,n;
+    Node *p,*h,*q;
+    h=(Node*)malloc(sizeof(Node));
+    p=h;
+    printf("请输入你想新增员工的人数：\n");
+    scanf("%d",&n);
+    for(i=0;i<n;i++)
+    {
+        q=(Node*)malloc(sizeof(Node));
+        input(q);
+        p->next=q;
+        p=q;
+    }
+    return h;
+}
+int update(Node *h)
+{
+    unsigned long nu;
+    Node *p;
+    p=h->next;
+    printf("请输入你想查找的员工的职工号：\n");
+    scanf("%ld",&nu);
+    if(!p)
+     return 0;
+    else
+    {
+        while(p&&p->num!=nu)
+        {
+            p=p->next;
+        }
+        if(!p)
+         return 0;
+        else
+        {
+            printf("请重新输入姓名：\n");
+            scanf("%s",p->name);
+            getchar();
+            printf("请重新输入性别：\n");
+            scanf("%s",&p->gender);
+            printf("请重新输入年龄：\n");
+            scanf("%d",&p->age);
+            printf("请重新输入电话：\n");
+            scanf("%ld",&p->tel);
+            printf("请重新输入工资：\n");
+            scanf("%ld",&p->wage);
+            printf("请重新输入职工号：\n");
+            scanf("%ld",&p->num);
+            return 1;
+        }
+    }
+}
+void insert(Node *h)
+{
+    Node *p,*q;
+    p=h;
+    q=(Node*)malloc(sizeof(Node));
+    input(q);
+    while(p->next)
+    {
+        p=p->next;
+    }
+    p->next=q;
+}
+
+Node *search_name(Node *h,char na[])
+{
+    Node *p;
+    p=h->next;
+    while(p&&strcmp(p->name,na)!=0)
+    {
+        p=p->next;
+    }
+    if(!p)
+     return NULL;
+    else
+     return p;
+}
+
+void delete_node(Node *h,Node*p)
+{
+    Node *pre;
+    pre=h;
+    while(pre->next!=p)
+    {
+        pre=pre->next;
+    }
+    pre->next=p->next;
+    free(p);
+}
+int delete_name(Node *h)
+{
+    Node *p,*k[20];
+    int i,j,sum;
+    char na[20],dep[20],gen;
+    unsigned int ag;
+    unsigned long te,wa,nu;
+            printf("请输入姓名：\n");
+            scanf("%s",na);
+            p=search_name(h,na);
+            if(p)
+            {
+                delete_node(h,p);
+                return 1;
+            }
+            else
+            {
+                printf("不存在这个人！\n");
+                return 0;
+            }
+}
+void exchange()
+{
+    printf("Welcome to the System to manage employees' information\n");
+    printf("\t1.Input employees' information\n");  
+    printf("\t3.Update employees' information\n");
+    printf("\t2.delete employees' information\n");
+    printf("\t4.exit the system\n");
+}
+int main()
+{
+    int boolen;
+    unsigned long id;
+    Node *h;
+    char a;
+    while(1)
+    {
+    	exchange();
+        a = getch();
+        switch(a)
+        {
+            case '1':
+            h=create();
+            system("pause");
+            system("cls");
+            break;
+            case '2':
+            id=update(h);
+            if(!boolen)
+                printf("你要修改的职工号不存在!");
+                system("pause");
+                system("cls");
+                break;
+            case '3':
+                delete_name(h);
+                system("pause");
+                system("cls");
+                break;
+            case '0':
+                printf("谢谢你的使用，再见！\n");
+                break; 
+            default:
+                printf("你的输入有误，请重新输入！\n");
+                system("pause");
+                system("cls");
+        }
+    }
+}
